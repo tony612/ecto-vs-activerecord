@@ -1,0 +1,12 @@
+version: '2'
+services:
+  demo:
+    build: .
+    volumes:
+      - .:/ecto-demo
+    links:
+      - postgres:postgres.local
+    environment:
+      - PG_HOST=postgres.local
+  postgres:
+    image: postgres:9.4.6
