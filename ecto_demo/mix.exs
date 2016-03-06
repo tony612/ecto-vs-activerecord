@@ -11,10 +11,12 @@ defmodule EctoDemo.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :postgrex, :ecto],
+     mod: {EctoDemo, {}}]
   end
 
   defp deps do
-    []
+    [{:ecto, "~> 2.0.0-beta.2"},
+     {:postgrex, ">= 0.0.0"}]
   end
 end
