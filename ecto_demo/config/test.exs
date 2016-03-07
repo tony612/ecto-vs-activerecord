@@ -7,3 +7,5 @@ config :ecto_demo, EctoDemo.Repo,
   username: "postgres",
   password: "postgres",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :logger, level: :warn
