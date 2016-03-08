@@ -24,4 +24,19 @@ defmodule EctoDemoTest do
     clients = Repo.all(query)
     assert [%Client{id: ^id1}, %Client{id: ^id2}] = clients
   end
+
+  test "retrieving a single object - take first" do
+    %Client{id: id} = insert_client
+    query = from Client, limit: 1
+    client = Repo.one(query)
+    assert %Client{id: ^id} = client
+  end
+
+  test "retrieving a single object - take first n" do
+    %Client{id: id1} = insert_client
+    %Client{id: id2} = insert_client
+    query = from Client, limit: 2
+    clients = Repo.all(query)
+    assert [%Client{id: ^id1}, %Client{id: ^id2}] = clients
+  end
 end
