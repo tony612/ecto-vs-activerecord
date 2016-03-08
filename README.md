@@ -28,6 +28,12 @@ multiple objects
 
 > Oh, yes. Rails guide says you can use a method retrieving a single object to fetch multiple objects.*
 
+```elixir
+# Ecto
+query = from c in Client, where: c.id in ^ids
+clients = Repo.all(query)
+```
+
 ```ruby
 # AR
 client = Client.find([1, 10]) # or Client.find(1, 10)
