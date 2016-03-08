@@ -10,34 +10,24 @@ You can find test cases for Ecto in `./ecto_demo/test/ecto_demo_test.exs`
 
 #### 1.1 Retrieving a Single Object
 
-> find
-
-single object
+##### find
 
 ```elixir
 # Ecto
 client = Repo.get_by(Client, id: id)
-```
 
-```ruby
-# AR
-client = Client.find(10)
-```
-
-multiple objects
-
-```elixir
-# Ecto
 query = from c in Client, where: c.id in ^ids
 clients = Repo.all(query)
 ```
 
 ```ruby
 # AR
+client = Client.find(10)
+
 client = Client.find([1, 10]) # or Client.find(1, 10)
 ```
 
-> take
+##### take
 
 first one
 
@@ -45,24 +35,38 @@ first one
 # Ecto
 query = from c in Client, limit: 1
 client = Repo.one(query)
-```
 
-```ruby
-# AR
-client = Client.take
-```
-
-first n
-
-```elixir
-# Ecto
 query = from c in Client, limit: 2
 clients = Repo.all(query)
 ```
 
 ```ruby
 # AR
+client = Client.take
+
 client = Client.take(2)
+```
+
+##### first
+
+```elixir
+# Ecto
+client = Client |> Ecto.Query.first |> Repo.one
+
+query = from c in Client, limit: 2, order_by: c.id
+clients = Repo.all(query)
+
+query = from c in Client, order_by: c.first_name
+client = query |> Ecto.Query.first |> Repo.one
+```
+
+```ruby
+# AR
+client = Client.first
+
+client = Client.first(3)
+
+client = Client.order(:first_name).first
 ```
 
 ## Contributing

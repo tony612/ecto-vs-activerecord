@@ -39,4 +39,28 @@ defmodule EctoDemoTest do
     clients = Repo.all(query)
     assert [%Client{id: ^id1}, %Client{id: ^id2}] = clients
   end
+
+  test "retrieving a single object - first one" do
+    %Client{id: id} = insert_client
+    insert_client
+    client = Client |> Ecto.Query.first |> Repo.one
+    assert client.id == id
+  end
+
+  test "retrieving a single object - first n order by id" do
+    %Client{id: id1} = insert_client
+    %Client{id: id2} = insert_client
+    insert_client
+    query = from c in Client, limit: 2, order_by: c.id
+    clients = Repo.all(query)
+    assert [%Client{id: ^id1}, %Client{id: ^id2}] = clients
+  end
+
+  test "retrieving a single object - first n order by others" do
+    insert_client(%{first_name: "b"})
+    %Client{id: id} = insert_client(%{first_name: "a"})
+    query = from c in Client, order_by: c.first_name
+    client = query |> Ecto.Query.first |> Repo.one
+    assert client.id == id
+  end
 end
